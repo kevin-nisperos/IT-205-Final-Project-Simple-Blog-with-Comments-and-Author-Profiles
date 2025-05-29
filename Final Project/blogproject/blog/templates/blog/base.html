@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Simple Blog{% endblock %}</title>
+    <style>
+        /* Simple example styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 0 10px;
+        }
+        nav {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .btn-logout {
+            background-color: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+        .btn-logout:hover {
+            background-color: #c0392b;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav style="display: flex; justify-content: space-between; padding: 10px;">
+        <a href="{% url 'index' %}">Home</a>
+        {% if user.is_authenticated %}
+            <span>Welcome, {{ user.username }}!</span>
+            <!-- Use a POST form for logout -->
+            <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn-logout">Logout</button>
+            </form>
+        {% else %}
+            <div><a href="/">Home</a></div>
+    <div style="display: flex; gap: 10px;">
+        <a href="{% url 'login' %}" style="padding: 8px 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Login</a>
+        <a href="{% url 'register' %}" style="padding: 8px 16px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px;">Register</a>
+    </div>
+        {% endif %}
+    </nav>
+
+    {% block content %}{% endblock %}
+</body>
+</html>

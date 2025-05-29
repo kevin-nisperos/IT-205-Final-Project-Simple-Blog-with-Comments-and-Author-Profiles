@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Simple Blog{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for post in posts %}
+            <li>
+                <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a> by 
+                <a href="{% url 'author_profile' post.author.id %}">{{ post.author.username }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

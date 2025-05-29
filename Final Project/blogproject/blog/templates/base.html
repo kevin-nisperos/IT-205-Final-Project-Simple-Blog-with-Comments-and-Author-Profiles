@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}My Blog{% endblock %}</title>
+    <style>
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-btn, .register-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar a {
+            margin-left: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <h1>All Blog Posts</h1>
+        {% if user.is_authenticated %}
+            <div>
+                <span>Welcome, {{ user.username }}!</span>
+                <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </div>
+        {% else %}
+            <a href="{% url 'login' %}" class="login-btn">Login</a>
+            <a href="{% url 'register' %}" class="register-btn">Register</a>  <!-- Register Button -->
+        {% endif %}
+    </div>
+
+    {% if user.is_authenticated %}
+        <p><a href="{% url 'create_post' %}">Create New Post</a></p>
+    {% endif %}
+
+    {% block content %}
+    <!-- Content from child templates goes here -->
+    {% endblock %}
+</body>
+</html>
