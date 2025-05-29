@@ -1,1 +1,0 @@
-# IT-205-Final-Project-Simple-Blog-with-Comments-and-Author-Profiles
